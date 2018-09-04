@@ -29,7 +29,17 @@
   (require 'ls-lisp)
   (setq ls-lisp-use-insert-directory-program nil))
 
-;; Window mode settings
+;;; Javascript
+(use-package js2-mode :ensure t)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+(add-hook 'js2-mode-hook 'eslintd-fix-mode)
+(use-package js2-refactor :ensure t)
+(use-package xref-js2 :ensure t)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(js2r-add-keybindings-with-prefix "C-c C-r")
+
+;;; Window mode settings
 (when window-system
   (global-display-line-numbers-mode)
   (tool-bar-mode 0))
@@ -60,6 +70,10 @@
 ;;; Reload files if changed on disk
 (global-auto-revert-mode t)
 
+;;; Snippets
+(use-package yasnippet :ensure t)
+(yas-global-mode 1)
+
 ;; Temporal files to /tmp
 (setq backup-directory-alist
   `((".*" . ,temporary-file-directory)))
@@ -85,8 +99,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(whitespace-hspace ((t (:foreground "gray90"))))
+ '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono"))))
  '(whitespace-line ((t nil)))
  '(whitespace-newline ((t (:foreground "gray20" :weight normal))))
- '(whitespace-space ((t (:foreground "gray30"))))
- '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono")))))
+ '(whitespace-space ((t (:foreground "gray30")))))
