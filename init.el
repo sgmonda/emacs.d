@@ -1,9 +1,3 @@
-;;; Environment
-;; (setenv "PATH" (concat (getenv "PATH") ":" (concat (getenv "HOME") "/.nvm/versions/node/v10.6.0/bin/")))
-;; (setq exec-path (append exec-path (concat (getenv "HOME") "/.nvm/versions/node/v10.6.0/bin/")))
-;; (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setenv "PATH" (concat (getenv "PATH") ":/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/"))
-(setq exec-path (append exec-path '("/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/")))
 
 ;;; Initial buffer
 (setq inhibit-splash-screen t)
@@ -19,6 +13,16 @@
 (dolist (package '(use-package))
   (unless (package-installed-p package)
     (package-install package)))
+(package-initialize)
+(package-refresh-contents)
+
+;;; Environment
+;(setenv "PATH" (concat (getenv "PATH") ":/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/"))
+;(setq exec-path (append exec-path '("/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/")))
+(package-install 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+;(use-package exec-path-from-shell :ensure t)
+
 
 ;;; Project management
 (use-package projectile :ensure t)
@@ -54,6 +58,11 @@
 ;;; Flycheck
 (global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(add-hook 'js2-mode-hook
+          (defun my-js2-mode-setup ()
+            (flycheck-mode t)
+            (when (executable-find "eslint")
+              (flycheck-select-checker 'javascript-eslint))))
 
 ;;; Autocomplete
 (use-package company :ensure t)
@@ -72,7 +81,6 @@
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 ;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
 (add-hook 'js-mode-hook #'setup-tide-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -128,6 +136,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (tango-dark)))
+ '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(js-indent-level 2)
  '(package-selected-packages (quote (all-the-icons neotree dtrt-indent use-package))))
 (custom-set-faces
@@ -136,3 +145,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono")))))
+
+
