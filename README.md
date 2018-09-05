@@ -10,3 +10,16 @@ Install font icons
 ```
 M-x all-the-icons-install-fonts
 ```
+
+Install `tern` globally:
+
+```
+npm install -g tern
+# cd /usr/bin && ln -s /Users/sgmonda/.nvm/versions/node/v10.6.0/bin/tern
+```
+
+Install `eslint_d` globally:
+
+```
+npm install -g eslint_d
+```
