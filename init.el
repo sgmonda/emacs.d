@@ -13,16 +13,23 @@
 (dolist (package '(use-package))
   (unless (package-installed-p package)
     (package-install package)))
-(package-initialize)
-(package-refresh-contents)
 
 ;;; Environment
 ;(setenv "PATH" (concat (getenv "PATH") ":/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/"))
 ;(setq exec-path (append exec-path '("/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/")))
-(package-install 'exec-path-from-shell)
+(use-package exec-path-from-shell :ensure t)
 (exec-path-from-shell-initialize)
 ;(use-package exec-path-from-shell :ensure t)
 
+;;; Flycheck
+(global-flycheck-mode)
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(add-hook 'js2-mode-hook
+          (defun my-js2-mode-setup ()
+            (flycheck-mode t)
+            (when (executable-find "eslint")
+              (flycheck-select-checker 'javascript-eslint))))
+;(setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
 
 ;;; Project management
 (use-package projectile :ensure t)
@@ -54,15 +61,6 @@
 (use-package eslintd-fix :ensure t)
 (add-hook 'js2-mode-hook 'eslintd-fix-mode)
 (add-hook 'js-mode-hook 'eslintd-fix-mode)
-
-;;; Flycheck
-(global-flycheck-mode)
-(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-(add-hook 'js2-mode-hook
-          (defun my-js2-mode-setup ()
-            (flycheck-mode t)
-            (when (executable-find "eslint")
-              (flycheck-select-checker 'javascript-eslint))))
 
 ;;; Autocomplete
 (use-package company :ensure t)
@@ -145,5 +143,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono")))))
-
 
