@@ -136,6 +136,7 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(js-indent-level 2)
+ '(js2-strict-trailing-comma-warning nil)
  '(package-selected-packages (quote (all-the-icons neotree dtrt-indent use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
