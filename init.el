@@ -3,7 +3,7 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
-;;; Package manager. Dependencies
+;;; Package manager repositories
 (package-initialize)
 (require 'package)
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/") t)
@@ -13,6 +13,7 @@
 (dolist (package '(use-package))
   (unless (package-installed-p package)
     (package-install package)))
+(unless package-archive-contents (package-refresh-contents))
 
 ;;; Markdown
 (use-package markdown-mode :ensure t)
@@ -22,11 +23,8 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;;; Environment
-;(setenv "PATH" (concat (getenv "PATH") ":/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/"))
-;(setq exec-path (append exec-path '("/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/")))
 (use-package exec-path-from-shell :ensure t)
 (exec-path-from-shell-initialize)
-;(use-package exec-path-from-shell :ensure t)
 
 ;;; Common
 (electric-pair-mode 1)
@@ -35,6 +33,7 @@
 (add-hook 'after-load-functions 'fci-mode)
 
 ;;; Flycheck
+(use-package flycheck :ensure t)
 (global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 (add-hook 'js2-mode-hook
@@ -49,7 +48,7 @@
 (use-package flx-ido :ensure t)
 (projectile-global-mode)
 (setq projectile-use-git-grep t)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map) ;; CMD+p for project-related stuff
 (ido-mode 1)
 (ido-everywhere 1)
 (flx-ido-mode 1)
