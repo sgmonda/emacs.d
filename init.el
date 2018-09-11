@@ -14,12 +14,25 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+;;; Markdown
+(use-package markdown-mode :ensure t)
+
+;;; Git
+(use-package magit :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;;; Environment
 ;(setenv "PATH" (concat (getenv "PATH") ":/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/"))
 ;(setq exec-path (append exec-path '("/Users/sgmonda/.nvm/versions/node/v10.6.0/bin/")))
 (use-package exec-path-from-shell :ensure t)
 (exec-path-from-shell-initialize)
 ;(use-package exec-path-from-shell :ensure t)
+
+;;; Common
+(electric-pair-mode 1)
+(use-package fill-column-indicator :ensure t)
+(setq fci-rule-column 80)
+(add-hook 'after-load-functions 'fci-mode)
 
 ;;; Flycheck
 (global-flycheck-mode)
@@ -35,6 +48,7 @@
 (use-package projectile :ensure t)
 (use-package flx-ido :ensure t)
 (projectile-global-mode)
+(setq projectile-use-git-grep t)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -50,13 +64,17 @@
 ;;; My defaults
 (setq-default indent-tabs-mode nil)
 
+;;; Coffeescript
+(use-package coffee-mode :ensure t)
+
 ;;; Javascript
 (use-package js2-mode :ensure t)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+;(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 (use-package js2-refactor :ensure t)
 (use-package xref-js2 :ensure t)
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
+(add-hook 'js-mode-hook #'js2-refactor-mode)
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (use-package eslintd-fix :ensure t)
 (add-hook 'js2-mode-hook 'eslintd-fix-mode)
@@ -99,12 +117,12 @@
 ;;; Color theme
 (set-background-color "gray10")
 (set-foreground-color "gray90")
-(set-face-attribute 'region nil :background "#0e4686")
+(set-face-attribute 'region nil :background "gray30")
 
 ;;; Current line highlighting
 (global-hl-line-mode 1)
 (set-face-attribute 'default nil :background "gray15")
-(set-face-attribute 'hl-line nil :inherit nil :background "gray30")
+(set-face-attribute 'hl-line nil :inherit nil :background "gray20")
 
 ;;; Mac OS specific stuff
 (setq ns-right-alternate-modifier nil)
@@ -126,6 +144,7 @@
 ;; Indentation
 (use-package dtrt-indent :ensure t)
 (dtrt-indent-global-mode 1)
+(setq default-tab-width 2)
 
 ;; Miscellaneous
 (custom-set-variables
@@ -134,10 +153,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (tango-dark)))
+ '(electric-pair-mode t)
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(js-indent-level 2)
  '(js2-strict-trailing-comma-warning nil)
- '(package-selected-packages (quote (all-the-icons neotree dtrt-indent use-package))))
+ '(package-selected-packages
+   (quote
+    (fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
+ '(tab-width 3))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
