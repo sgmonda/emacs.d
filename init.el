@@ -36,12 +36,20 @@
 (use-package flycheck :ensure t)
 (global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(add-hook 'js-mode-hook
+          (defun my-js2-mode-setup ()
+            (flycheck-mode t)
+            (when (executable-find "eslint")
+              (flycheck-select-checker 'javascript-eslint))))
 (add-hook 'js2-mode-hook
           (defun my-js2-mode-setup ()
             (flycheck-mode t)
             (when (executable-find "eslint")
               (flycheck-select-checker 'javascript-eslint))))
 ;(setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
+
+;;; JSON
+(use-package json-mode :ensure t)
 
 ;;; Project management
 (use-package projectile :ensure t)
@@ -68,8 +76,8 @@
 
 ;;; Javascript
 (use-package js2-mode :ensure t)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 (use-package js2-refactor :ensure t)
 (use-package xref-js2 :ensure t)
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
@@ -154,16 +162,19 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(electric-pair-mode t)
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
+ '(flycheck-highlighting-mode (quote sexps))
  '(js-indent-level 2)
  '(js2-strict-trailing-comma-warning nil)
+ '(neo-window-width 50)
  '(package-selected-packages
    (quote
-    (fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
+    (json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
  '(tab-width 3))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono"))))
+ '(flycheck-error ((t (:background "Red1")))))
 

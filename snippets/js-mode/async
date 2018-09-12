@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: await
+# key: as
+# --
+async function ${1:myFun} ($2) {
+  $0
+}
