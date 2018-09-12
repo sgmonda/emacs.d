@@ -37,16 +37,11 @@
 (global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 (add-hook 'js-mode-hook
-          (defun my-js2-mode-setup ()
+          (defun check ()
             (flycheck-mode t)
             (when (executable-find "eslint")
               (flycheck-select-checker 'javascript-eslint))))
-(add-hook 'js2-mode-hook
-          (defun my-js2-mode-setup ()
-            (flycheck-mode t)
-            (when (executable-find "eslint")
-              (flycheck-select-checker 'javascript-eslint))))
-;(setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
+(setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
 
 ;;; JSON
 (use-package json-mode :ensure t)
@@ -75,16 +70,7 @@
 (use-package coffee-mode :ensure t)
 
 ;;; Javascript
-(use-package js2-mode :ensure t)
-; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
-(use-package js2-refactor :ensure t)
-(use-package xref-js2 :ensure t)
-(add-hook 'js2-mode-hook #'js2-refactor-mode)
-(add-hook 'js-mode-hook #'js2-refactor-mode)
-(js2r-add-keybindings-with-prefix "C-c C-r")
 (use-package eslintd-fix :ensure t)
-(add-hook 'js2-mode-hook 'eslintd-fix-mode)
 (add-hook 'js-mode-hook 'eslintd-fix-mode)
 
 ;;; Autocomplete
@@ -164,7 +150,6 @@
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(flycheck-highlighting-mode (quote sexps))
  '(js-indent-level 2)
- '(js2-strict-trailing-comma-warning nil)
  '(neo-window-width 50)
  '(package-selected-packages
    (quote
