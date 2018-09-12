@@ -10,10 +10,10 @@
 (add-to-list 'package-archives '("MELPA-STABLE" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("MILKBOX" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("MARMALADE" . "http://marmalade-repo.org/packages/") t)
-(dolist (package '(use-package))
-  (unless (package-installed-p package)
-    (package-install package)))
-(unless package-archive-contents (package-refresh-contents))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
 
 ;;; Markdown
 (use-package markdown-mode :ensure t)
