@@ -32,17 +32,6 @@
 (setq fci-rule-column 80)
 (add-hook 'after-load-functions 'fci-mode)
 
-;;; Flycheck
-(use-package flycheck :ensure t)
-(global-flycheck-mode)
-(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-(add-hook 'js-mode-hook
-          (defun check ()
-            (flycheck-mode t)
-            (when (executable-find "eslint")
-              (flycheck-select-checker 'javascript-eslint))))
-(setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
-
 ;;; JSON
 (use-package json-mode :ensure t)
 
@@ -57,6 +46,19 @@
 (flx-ido-mode 1)
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
+
+;;; Web mode
+(use-package web-mode :ensure t)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+;;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 
 ;;; Mac OS X
 (when (eq system-type 'darwin)
@@ -80,12 +82,9 @@
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (company-mode +1))
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
@@ -139,6 +138,16 @@
 (dtrt-indent-global-mode 1)
 (setq default-tab-width 2)
 
+;;; Flycheck
+(use-package flycheck :ensure t)
+(global-flycheck-mode)
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(add-hook 'js-mode-hook
+          (defun check ()
+            (flycheck-mode t)
+            (when (executable-find "eslint")
+              (flycheck-select-checker 'javascript-eslint))))
+
 ;; Miscellaneous
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -148,18 +157,31 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(electric-pair-mode t)
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
+ '(flycheck-display-errors-delay 0.1)
+ '(flycheck-global-modes t)
  '(flycheck-highlighting-mode (quote sexps))
+ '(global-whitespace-mode t)
+ '(global-whitespace-newline-mode nil)
  '(js-indent-level 2)
  '(neo-window-width 50)
  '(package-selected-packages
    (quote
     (json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
- '(tab-width 3))
+ '(tab-width 3)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-css-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
+ '(whitespace-line-column 120))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "gray15" :foreground "gray90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "nil" :family "SF Mono"))))
- '(flycheck-error ((t (:background "Red1")))))
-
+ '(flycheck-error ((t (:background "Red1"))))
+ '(flycheck-error-list-warning ((t (:inherit warning))))
+ '(whitespace-hspace ((t (:foreground "grey27"))))
+ '(whitespace-line ((t (:slant normal))))
+ '(whitespace-newline ((t (:foreground "grey27"))))
+ '(whitespace-space ((t (:foreground "grey27"))))
+ '(whitespace-tab ((t (:foreground "gray27")))))
