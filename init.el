@@ -15,6 +15,10 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;;; Multiple regions update
+(use-package iedit :ensure t)
+(define-key global-map (kbd "C-,") 'iedit-mode)
+
 ;;; Markdown
 (use-package markdown-mode :ensure t)
 
@@ -31,6 +35,8 @@
 (use-package fill-column-indicator :ensure t)
 (setq fci-rule-column 80)
 (add-hook 'after-load-functions 'fci-mode)
+(use-package ace-window :ensure t)
+(global-set-key (kbd "M-o") 'ace-window)
 
 ;;; JSON
 (use-package json-mode :ensure t)
@@ -166,11 +172,12 @@
  '(neo-window-width 50)
  '(package-selected-packages
    (quote
-    (json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
+    (ace-window iedit json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
  '(tab-width 3)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
+ '(web-mode-sql-indent-offset 2)
  '(whitespace-line-column 120))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
