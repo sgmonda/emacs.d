@@ -37,6 +37,10 @@
 (add-hook 'after-load-functions 'fci-mode)
 (use-package ace-window :ensure t)
 (global-set-key (kbd "M-o") 'ace-window)
+(use-package diff-hl :ensure t)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(global-diff-hl-mode)
+(diff-hl-flydiff-mode 1)
 
 ;;; JSON
 (use-package json-mode :ensure t)
@@ -172,7 +176,7 @@
  '(neo-window-width 50)
  '(package-selected-packages
    (quote
-    (ace-window iedit json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
+    (diff-hl ace-window iedit json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
  '(tab-width 3)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
