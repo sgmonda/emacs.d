@@ -41,6 +41,7 @@
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 (global-diff-hl-mode)
 (diff-hl-flydiff-mode 1)
+(global-set-key (kbd "s-/") 'comment-region)
 
 ;;; JSON
 (use-package json-mode :ensure t)
@@ -84,6 +85,7 @@
 ;;; Javascript
 (use-package eslintd-fix :ensure t)
 (add-hook 'js-mode-hook 'eslintd-fix-mode)
+(setq-default js-indent-align-list-continuation nil)
 
 ;;; Autocomplete
 (use-package company :ensure t)
