@@ -1,7 +1,9 @@
 
 ;;; Initial buffer
 (setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
+;; (setq inhibit-startup-message t)
+;; (setq inhibit-startup-screen t
+;;       initial-buffer-choice nil)
 
 ;;; Package manager repositories
 (package-initialize)
@@ -113,11 +115,10 @@
 (add-to-list 'default-frame-alist '(width . 150))
 
 ;;; Filesystem tree
-(use-package neotree :ensure t)
-(use-package all-the-icons :ensure t)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-;(neo-theme 'arrow)
-(neotree-show)
+;; (use-package neotree :ensure t)
+;; (use-package all-the-icons :ensure t)
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;; (neotree-show)
 
 ;;; Color theme
 (set-background-color "gray10")
