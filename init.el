@@ -1,9 +1,6 @@
 
 ;;; Initial buffer
 (setq inhibit-splash-screen t)
-;; (setq inhibit-startup-message t)
-;; (setq inhibit-startup-screen t
-;;       initial-buffer-choice nil)
 
 ;;; Package manager repositories
 (package-initialize)
@@ -162,6 +159,10 @@
             (when (executable-find "eslint")
               (flycheck-select-checker 'javascript-eslint))))
 
+;; Elixir
+(unless (package-installed-p 'alchemist)
+  (package-install 'alchemist))
+
 ;; Miscellaneous
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -180,7 +181,7 @@
  '(neo-window-width 50)
  '(package-selected-packages
    (quote
-    (diff-hl ace-window iedit json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
+    (alchemist diff-hl ace-window iedit json-mode fill-column-indicator coffee-mode magit markdown-mode all-the-icons neotree dtrt-indent use-package)))
  '(tab-width 3)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
