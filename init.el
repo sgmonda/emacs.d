@@ -17,6 +17,13 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;; Support "C-x o" and "C-x b" inside term-mode
+(add-hook 'term-mode-hook
+  (lambda ()
+    (term-set-escape-char ?\C-x)
+    (define-key term-raw-map "\M-y" 'yank-pop)
+    (define-key term-raw-map "\M-w" 'kill-ring-save)))
+
 ;;; Multiple regions update
 (use-package iedit :ensure t)
 (define-key global-map (kbd "C-,") 'iedit-mode)
