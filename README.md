@@ -30,3 +30,13 @@ Install font icons
 ```
 M-x all-the-icons-install-fonts
 ```
+
+# Features
+
+#### Multiple region-replacing
+
+Move cursor to a word and press `C-,`. All occurrences of that word are highlighted and can be modified at once.
+
+
+
+See [`iedit-mode`](https://github.com/victorhge/iedit). 
